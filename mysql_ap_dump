@@ -1,0 +1,364 @@
+-- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+--
+-- Host: localhost    Database: the_databases
+-- ------------------------------------------------------
+-- Server version	5.7.21-0ubuntu0.16.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `app_routes`
+--
+
+DROP TABLE IF EXISTS `app_routes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `app_routes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `route` varchar(100) DEFAULT NULL,
+  `method` varchar(10) DEFAULT NULL,
+  `inputs` varchar(1000) DEFAULT NULL,
+  `output` varchar(500) DEFAULT NULL,
+  `route_function` varchar(100) DEFAULT NULL,
+  `database_id` int(11) DEFAULT NULL,
+  `callee_function` varchar(100) DEFAULT NULL,
+  `db_function` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `database_id` (`database_id`),
+  CONSTRAINT `app_routes_ibfk_1` FOREIGN KEY (`database_id`) REFERENCES `database_uri` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `app_routes`
+--
+
+LOCK TABLES `app_routes` WRITE;
+/*!40000 ALTER TABLE `app_routes` DISABLE KEYS */;
+INSERT INTO `app_routes` VALUES (1,'sp_insert_readership_multientity_config','GET','vendorid|int, buySideOrgId|int, sellsideOrgId|int, pickupFolder|string, dropFolder|string, splitColumn|string, type|string','int','rtib_sp1',1,'exec','execute_non_query'),(2,'Update_Multitemplate','GET','','int','rtib_sp2',1,'exec','execute_non_query');
+/*!40000 ALTER TABLE `app_routes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `database_tables`
+--
+
+DROP TABLE IF EXISTS `database_tables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `database_tables` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `db_name` varchar(100) DEFAULT NULL,
+  `db_table` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `db_name` (`db_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `database_tables`
+--
+
+LOCK TABLES `database_tables` WRITE;
+/*!40000 ALTER TABLE `database_tables` DISABLE KEYS */;
+INSERT INTO `database_tables` VALUES (1,'dev_rtinbound','int_sftp_config'),(2,'dev_rtinbound','default_rule'),(3,'dev_rtinbound','int_route_datatype'),(4,'dev_rtinbound','int_route_data'),(6,'dev_rtinbound','int_multientity_config'),(7,'dev_rtinbound','int_multi_template'),(8,'dev_rtinbound','int_preprocessing_cleanup_rules'),(9,'dev_rtinbound','int_dateformat'),(10,'dev_rtinbound','int_delimeters'),(11,'dev_rtinbound','int_combomappingoutputtypemaster'),(12,'dev_rtinbound','int_combomappingoutputvaluemaster');
+/*!40000 ALTER TABLE `database_tables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `database_uri`
+--
+
+DROP TABLE IF EXISTS `database_uri`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `database_uri` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `database_name` varchar(100) DEFAULT NULL,
+  `uri` varchar(1000) DEFAULT NULL,
+  `connection_string` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `database_uri`
+--
+
+LOCK TABLES `database_uri` WRITE;
+/*!40000 ALTER TABLE `database_uri` DISABLE KEYS */;
+INSERT INTO `database_uri` VALUES (1,'dev_rtinbound','mssql+pyodbc://rtinboundweb:FKBq0f#vAL@192.168.50.105/dev_rtinbound?driver=ODBC Driver 13 for SQL Server','DRIVER={ODBC Driver 13 for SQL Server};SERVER=qa-rtidb.oneaccess.io;DATABASE=dev_rtinbound;UID=rtinboundweb;PWD=FKBq0f#vAL');
+/*!40000 ALTER TABLE `database_uri` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `form_template`
+--
+
+DROP TABLE IF EXISTS `form_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_template` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ar_id` int(11) DEFAULT NULL,
+  `extends` varchar(500) DEFAULT NULL,
+  `js_files` varchar(1000) DEFAULT NULL,
+  `div_html` text,
+  `doc_root_template_path` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ar_id` (`ar_id`),
+  CONSTRAINT `form_template_ibfk_1` FOREIGN KEY (`ar_id`) REFERENCES `app_routes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `form_template`
+--
+
+LOCK TABLES `form_template` WRITE;
+/*!40000 ALTER TABLE `form_template` DISABLE KEYS */;
+INSERT INTO `form_template` VALUES (1,1,'admin/master.html','','<div class=\"form-group\"><label class=\"col-md-2 control-label\" for=\"###FIELD_NAME###_input\">###FIELD_NAME###</label><div class=\"col-md-10\"><input type=\"text\" maxlength=\"100\" name=\"###FIELD_NAME###_input\" class=\"form-control\"/></div></div>','/home/vauser/Project/malpuva/templates/'),(2,2,'admin/master.html','','<div class=\"form-group\"><label class=\"col-md-2 control-label\" for=\"###FIELD_NAME###_input\">###FIELD_NAME###</label><div class=\"col-md-10\"><input type=\"text\" maxlength=\"100\" name=\"###FIELD_NAME###_input\" class=\"form-control\"/></div></div>','/home/vauser/Project/malpuva/templates/');
+/*!40000 ALTER TABLE `form_template` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `global_table_properties`
+--
+
+DROP TABLE IF EXISTS `global_table_properties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `global_table_properties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_size` int(11) NOT NULL,
+  `column_display_pk` tinyint(1) DEFAULT NULL,
+  `table_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `table_id` (`table_id`),
+  CONSTRAINT `global_table_properties_ibfk_1` FOREIGN KEY (`table_id`) REFERENCES `database_tables` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `global_table_properties`
+--
+
+LOCK TABLES `global_table_properties` WRITE;
+/*!40000 ALTER TABLE `global_table_properties` DISABLE KEYS */;
+INSERT INTO `global_table_properties` VALUES (1,10,1,1),(2,10,1,2),(3,10,1,3),(4,10,1,4),(6,10,1,6),(7,10,1,7),(8,10,1,8),(9,10,1,9),(10,10,1,10),(11,10,1,11),(12,10,1,12);
+/*!40000 ALTER TABLE `global_table_properties` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles_users`
+--
+
+DROP TABLE IF EXISTS `roles_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles_users` (
+  `user_id` int(11) DEFAULT NULL,
+  `roles_id` int(11) DEFAULT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `roles_id` (`roles_id`),
+  CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles_users`
+--
+
+LOCK TABLES `roles_users` WRITE;
+/*!40000 ALTER TABLE `roles_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `table_column`
+--
+
+DROP TABLE IF EXISTS `table_column`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `table_column` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `table_id` int(11) DEFAULT NULL,
+  `column_name` varchar(1000) DEFAULT NULL,
+  `form_column` tinyint(1) NOT NULL DEFAULT '1',
+  `is_pk` tinyint(1) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `default_sort` tinyint(1) DEFAULT NULL,
+  `column_searchable_list` tinyint(1) DEFAULT NULL,
+  `column_filters` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `table_id` (`table_id`),
+  CONSTRAINT `table_column_ibfk_1` FOREIGN KEY (`table_id`) REFERENCES `database_tables` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `table_column`
+--
+
+LOCK TABLES `table_column` WRITE;
+/*!40000 ALTER TABLE `table_column` DISABLE KEYS */;
+INSERT INTO `table_column` VALUES (1,1,'id',1,1,'db.Integer',1,0,0),(2,1,'sellsideorgid',1,0,'db.Integer',0,0,1),(3,1,'buysideorgid',1,0,'db.Integer',0,0,1),(4,1,'folder_path',1,0,'db.String(256)',0,1,0),(5,1,'output_path',1,0,'db.String(256)',0,1,0),(6,1,'status',1,0,'db.Integer',0,0,1),(7,1,'processed_path',1,0,'db.String(256)',0,1,0),(8,1,'source',1,0,'db.String(10)',0,1,0),(9,1,'multiflag',1,0,'db.Boolean()',0,0,0),(10,2,'sellsideid',1,1,'db.Integer',1,0,0),(11,2,'excel_header',1,1,'db.String(200)',0,1,0),(12,2,'bp_role',1,0,'db.String(100)',0,1,0),(13,2,'vendorid',1,0,'db.String(256)',0,0,1),(14,3,'type_id',1,1,'db.Integer',1,0,0),(15,3,'datatype_name',1,1,'db.String(30)',0,1,0),(16,3,'input_data',1,0,'db.String(200)',0,1,0),(17,3,'output_data',1,0,'db.String(200)',0,1,0),(18,3,'fallback_value',1,0,'db.String(200)',0,0,0),(19,3,'include_Sellside',1,0,'db.String(50)',0,0,1),(20,3,'include_Buyside',1,0,'db.String(50)',0,0,1),(21,3,'include_Vendor',1,0,'db.String(50)',0,0,1),(22,3,'exclude_Sellside',1,0,'db.String(50)',0,0,1),(23,3,'exclude_Buyside',1,0,'db.String(50)',0,0,1),(24,3,'exclude_Vendor',1,0,'db.String(50)',0,0,1),(25,3,'update_existing',1,0,'db.String(1)',0,0,1),(26,3,'update_mappings_from_default',1,0,'db.String(1)',0,0,1),(27,4,'type_id',1,1,'db.Integer',1,0,0),(28,4,'input_data',1,1,'db.String(50)',0,1,0),(29,4,'output_data',1,0,'db.String(50)',0,1,0),(30,4,'status',1,0,'db.Integer',0,0,1),(31,4,'created_date',1,0,'db.DateTime()',0,0,1),(58,6,'vendorid',1,1,'db.Integer',1,0,1),(59,6,'sellsideorgid',1,1,'db.Integer',0,0,1),(60,6,'buysideorgid',1,1,'db.Integer',0,0,1),(61,6,'source',1,1,'db.String(10)',0,1,0),(62,6,'InvestorCHName',1,0,'db.String(256)',0,1,0),(63,6,'BrokerCHName',1,0,'db.String(256)',0,1,0),(64,7,'OrgId',1,0,'db.Integer',1,0,1),(65,7,'Child_OrgId',1,1,'db.Integer',0,0,1),(66,7,'Child_Name',1,0,'db.String(400)',0,1,0),(67,7,'OrgType',1,0,'db.String(1)',0,1,0),(68,8,'vendorid',1,1,'db.Integer',1,0,1),(69,8,'sellsideid',1,1,'db.Integer',0,0,1),(70,8,'buysideid',1,1,'db.Integer',0,0,1),(71,8,'doctype',1,1,'db.String(10)',0,0,1),(72,8,'excel_column',1,1,'db.String(100)',0,1,0),(73,8,'original_value',1,1,'db.String(100)',0,1,0),(74,8,'replace_value',1,0,'db.String(100)',0,0,0),(75,8,'is_regular_expression',1,0,'db.Boolean()',0,0,0),(76,9,'DateFormatId',1,1,'db.Integer',1,0,0),(77,9,'DateFormat',1,0,'db.NVARCHAR(50, convert_unicode=False)',0,1,0),(78,9,'FormatForProcessing',1,0,'db.NVARCHAR(50, convert_unicode=False)',0,1,0),(79,9,'RemoveDotFlag',1,0,'db.Boolean()',0,0,1),(80,10,'delimeter',1,1,'db.String(50)',1,1,0),(81,11,'id',1,1,'db.Integer',1,0,0),(82,11,'columnName',1,0,'db.String(50)',0,1,0),(83,12,'id',1,1,'db.Integer',1,0,0),(84,12,'typeid',1,0,'db.Integer',0,0,1),(85,12,'name',1,0,'db.String(255)',0,1,0),(86,12,'manuallyAdded',1,0,'db.Boolean()',0,0,1),(87,12,'pairedSubType',1,0,'db.String(255)',0,1,0),(88,1,'vendorid',1,0,'db.Integer',0,0,1);
+/*!40000 ALTER TABLE `table_column` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test_another_procedures`
+--
+
+DROP TABLE IF EXISTS `test_another_procedures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_another_procedures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `input1` varchar(100) DEFAULT NULL,
+  `input2` int(11) DEFAULT NULL,
+  `input3` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_another_procedures`
+--
+
+LOCK TABLES `test_another_procedures` WRITE;
+/*!40000 ALTER TABLE `test_another_procedures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `test_another_procedures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test_procedures`
+--
+
+DROP TABLE IF EXISTS `test_procedures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_procedures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `input1` varchar(100) DEFAULT NULL,
+  `input2` int(11) DEFAULT NULL,
+  `input3` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_procedures`
+--
+
+LOCK TABLES `test_procedures` WRITE;
+/*!40000 ALTER TABLE `test_procedures` DISABLE KEYS */;
+INSERT INTO `test_procedures` VALUES (1,'abc',321,'dec'),(4,'def',213,'nov'),(8,'zsv',123,'asd'),(10,'hulka',12,'lol'),(11,'hulka',12,'asf'),(12,'asdf',12,'asf'),(18,'abc',123,'def'),(19,'xyz',456,'pqr'),(30,'hulka',101,'fulka');
+/*!40000 ALTER TABLE `test_procedures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'no','problem','no.problem@va.com','$pbkdf2-sha512$25000$8/6/917LeY/xnvM.x9hbqw$D4M34kIsgxDSOLekA9zG8TTbuaHHK4eZhcvS7gIWIDwmd2SBKVV0BMZTeObEVQHTtOTGMJ.8S4S.L2jn7T/U7w',1),(2,NULL,NULL,'lol.lolwa@va.com','$pbkdf2-sha512$25000$ByAkpBRCqJWyVqrV2nuP0Q$G8naM51/iX06UQPi7/eDCW81bQmT/S39EADRPfMST.Q4XrTn1efUcm4glqBlZ8FIKJttdXZ29MtHoejNE6sVIQ',1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `view_classes`
+--
+
+DROP TABLE IF EXISTS `view_classes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `view_classes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_route_id` int(11) DEFAULT NULL,
+  `template` varchar(1000) DEFAULT NULL,
+  `view_class` varchar(100) DEFAULT NULL,
+  `dd_name` varchar(100) DEFAULT NULL,
+  `endpoint` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `app_route_id` (`app_route_id`),
+  CONSTRAINT `view_classes_ibfk_1` FOREIGN KEY (`app_route_id`) REFERENCES `app_routes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `view_classes`
+--
+
+LOCK TABLES `view_classes` WRITE;
+/*!40000 ALTER TABLE `view_classes` DISABLE KEYS */;
+INSERT INTO `view_classes` VALUES (1,1,'admin/rtinbound_custom_form1.html','ViewSP1','Stored Procedures','cf_sp1'),(2,2,'admin/rtinbound_custom_form2.html','ViewSP2','Stored Procedures','cf_sp2');
+/*!40000 ALTER TABLE `view_classes` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-04-13 15:53:48

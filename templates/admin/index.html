@@ -1,0 +1,28 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+    <h1> Welcome to Admin Portal</h1>
+    <b>Database Tables Usage:</b>
+    <ol>
+        <li>The drop down lists on the navigation bar at the top are the Database's names.</li>
+        <li>Select a table from the drop down of the required database and make the changes as per requirements.</li>
+    </ol>
+    <b>Database Stored Procedures Usage:</b>
+    <ol>
+        <li>Select the stored procedure from the drop down.</li>
+        <li>Input the values if there are any.</li>
+        <li>Click submit to initiate the execution of the stored procedure.</li>
+    </ol>
+    {% if not current_user.is_authenticated %}
+        <div style="padding-bottom: 10px">
+            <span style="padding-left: 10px">To directly login, use the following credentials:<br/></span>
+            <span style="padding-left: 20px"><b>Email</b>: no.problem@va.com <br/></span>
+            <span style="padding-left: 20px"><b>Password</b>: 123456 </span>
+        </div>
+        <p>
+            <a class="btn btn-primary" href="{{ url_for('security.login') }}">Login</a>
+            <a class="btn btn-default" href="{{ url_for('security.register') }}">Register</a>
+        </p>
+    {% endif %}
+
+{% endblock body %}

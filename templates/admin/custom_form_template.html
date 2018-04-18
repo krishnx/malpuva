@@ -1,0 +1,20 @@
+{% extends "###EXTENDS###" %}
+{% block body %}
+    <form method="###METHOD###" name="###SP_NAME###_custom_form">
+        ###DIV###
+        <hr/>
+        <input type="submit" name="###SP_NAME###_submission" class="btn btn-primary" />
+    </form>
+    <hr/>
+    <!-- Result -->
+    <div id="result-block" style="">
+        <h3>Result:</h3>
+        <span style="color: #afafaf;" id="result">
+        &nbsp;Submit to see the result ...
+        </span>
+    </div>
+    <!-- Result -->
+
+    <script src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='custom_form.js') }}"></script>
+{% endblock %}

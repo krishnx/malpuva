@@ -1,0 +1,20 @@
+{% extends "admin/master.html" %}
+{% block body %}
+    <form method="GET" name="sp_insert_readership_multientity_config_custom_form">
+        <div class="form-group"><label class="col-md-2 control-label" for="vendorid_input">vendorid</label><div class="col-md-10"><input type="text" maxlength="100" name="vendorid_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="buySideOrgId_input">buySideOrgId</label><div class="col-md-10"><input type="text" maxlength="100" name="buySideOrgId_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="sellsideOrgId_input">sellsideOrgId</label><div class="col-md-10"><input type="text" maxlength="100" name="sellsideOrgId_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="pickupFolder_input">pickupFolder</label><div class="col-md-10"><input type="text" maxlength="100" name="pickupFolder_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="dropFolder_input">dropFolder</label><div class="col-md-10"><input type="text" maxlength="100" name="dropFolder_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="splitColumn_input">splitColumn</label><div class="col-md-10"><input type="text" maxlength="100" name="splitColumn_input" class="form-control"/></div></div><div class="form-group"><label class="col-md-2 control-label" for="type_input">type</label><div class="col-md-10"><input type="text" maxlength="100" name="type_input" class="form-control"/></div></div>
+        <hr/>
+        <input type="submit" name="sp_insert_readership_multientity_config_submission" class="btn btn-primary" />
+    </form>
+    <hr/>
+    <!-- Result -->
+    <div id="result-block" style="">
+        <h3>Result:</h3>
+        <span style="color: #afafaf;" id="result">
+        &nbsp;Submit to see the result ...
+        </span>
+    </div>
+    <!-- Result -->
+
+    <script src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='custom_form.js') }}"></script>
+{% endblock %}
